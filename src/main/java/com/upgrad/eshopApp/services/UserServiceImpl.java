@@ -1,7 +1,7 @@
 package com.upgrad.eshopApp.services;
 
 import com.upgrad.eshopApp.daos.UserDAO;
-import com.upgrad.eshopApp.entites.User;
+import com.upgrad.eshopApp.entites.EshopUser;
 import com.upgrad.eshopApp.exceptions.UserDetailsNotFoundException;
 import com.upgrad.eshopApp.exceptions.UserNameExistsException;
 import org.slf4j.Logger;
@@ -28,57 +28,57 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User acceptUserDetails(User user) throws UserNameExistsException {
-        logger.debug("Entered acceptUserDetails",user);
-        if(!userDAO.findByUsername(user.getUsername()).isPresent()){
-            return userDAO.save(user);
+    public EshopUser acceptUserDetails(EshopUser eshopUser) throws UserNameExistsException {
+        logger.debug("Entered acceptUserDetails", eshopUser);
+        if(!userDAO.findByUsername(eshopUser.getUsername()).isPresent()){
+            return userDAO.save(eshopUser);
         }else{
-            throw new UserNameExistsException("This username already exists please choose another : " + user.getUsername());
+            throw new UserNameExistsException("This username already exists please choose another : " + eshopUser.getUsername());
         }
     }
 
     @Override
-    public User getUserDetails(int id) throws UserDetailsNotFoundException {
+    public EshopUser getUserDetails(int id) throws UserDetailsNotFoundException {
         logger.debug("get user details" , id);
         System.out.println("Get user details ");
-        User user = userDAO.findById(id).orElseThrow(
+        EshopUser eshopUser = userDAO.findById(id).orElseThrow(
                 ()->  new UserDetailsNotFoundException("User not found for id" + id));
-        return user;
+        return eshopUser;
     }
 
     @Override
-    public User getUserDetailsByUsername(String username) throws UserDetailsNotFoundException {
-        User user = userDAO.findByUsername(username).orElseThrow(
+    public EshopUser getUserDetailsByUsername(String username) throws UserDetailsNotFoundException {
+        EshopUser eshopUser = userDAO.findByUsername(username).orElseThrow(
                 ()->  new UserDetailsNotFoundException("User not found for username" + username));
-        return user;
+        return eshopUser;
     }
 
     @Override
-    public User updateUserDetails(int initialUserId, User user) throws UserDetailsNotFoundException {
-        User initialUser = getUserDetails(initialUserId);
-        System.out.println("Initial user details : " + initialUser.toString());
-        initialUser.setFirstName(user.getFirstName());
-        initialUser.setLastName(user.getLastName());
-        initialUser.setPassword(user.getPassword());
-        initialUser.setPhoneNumber(user.getPhoneNumber());
+    public EshopUser updateUserDetails(int initialUserId, EshopUser eshopUser) throws UserDetailsNotFoundException {
+        EshopUser initialEshopUser = getUserDetails(initialUserId);
+        System.out.println("Initial user details : " + initialEshopUser.toString());
+        initialEshopUser.setFirstName(eshopUser.getFirstName());
+        initialEshopUser.setLastName(eshopUser.getLastName());
+        initialEshopUser.setPassword(eshopUser.getPassword());
+        initialEshopUser.setPhoneNumber(eshopUser.getPhoneNumber());
 //        initialUser.setOrders(user.getOrders());
 //        initialUser.setShippingAddress(user.getShippingAddress());
-        initialUser.setRole(user.getRole());
-        userDAO.save(initialUser);
+        initialEshopUser.setRole(eshopUser.getRole());
+        userDAO.save(initialEshopUser);
         System.out.println("New user details :" + getUserDetails(initialUserId).toString());
-        return initialUser;
+        return initialEshopUser;
     }
 
     @Override
     public UserDetails loaduserDetails(String username) throws  UserDetailsNotFoundException{
-        User user = userDAO.findByUsername(username).orElseThrow(
+        EshopUser eshopUser = userDAO.findByUsername(username).orElseThrow(
                 ()->  new UserDetailsNotFoundException("User not found for " + username));
 
-        return  new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword() , new ArrayList<>());
+        return  new org.springframework.security.core.userdetails.User(eshopUser.getUsername(), eshopUser.getPassword() , new ArrayList<>());
 
     }
 
-    public User updateUserDetails(User user){
-        return userDAO.save(user);
+    public EshopUser updateUserDetails(EshopUser eshopUser){
+        return userDAO.save(eshopUser);
     }
 }

@@ -1,10 +1,7 @@
 package com.upgrad.eshopApp.utils;
 
 import com.upgrad.eshopApp.dto.UserDTO;
-import com.upgrad.eshopApp.entites.Order;
-import com.upgrad.eshopApp.entites.Product;
-import com.upgrad.eshopApp.entites.ShippingAddress;
-import com.upgrad.eshopApp.entites.User;
+import com.upgrad.eshopApp.entites.EshopUser;
 import com.upgrad.eshopApp.services.OrderService;
 //import com.upgrad.eshopApp.services.ProductService;
 //import com.upgrad.eshopApp.services.ShippingAddressService;
@@ -12,9 +9,6 @@ import com.upgrad.eshopApp.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class EntityDTOConverter {
@@ -29,15 +23,18 @@ public class EntityDTOConverter {
 
 
 
-    public UserDTO convertToUserDTO(User user){
+    public UserDTO convertToUserDTO(EshopUser eshopUser){
         UserDTO userDTO = new UserDTO();
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setPassword(user.getPassword());
-        userDTO.setUsername(user.getUsername());
-        userDTO.setUserId(user.getId());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setRole(user.getRole());
+        userDTO.setFirstName(eshopUser.getFirstName());
+        userDTO.setLastName(eshopUser.getLastName());
+        userDTO.setPassword(eshopUser.getPassword());
+        userDTO.setUsername(eshopUser.getUsername());
+        userDTO.setUserId(eshopUser.getId());
+        userDTO.setEmail(eshopUser.getEmail());
+        userDTO.setCreated(eshopUser.getCreated());
+        userDTO.setUpdated(eshopUser.getUpdated());
+//        userDTO.setRole(user.getRole());
+        userDTO.setRole(eshopUser.getRole());
 //        userDTO.setOrders(user.getOrders());
 //        userDTO.setShippingAddress(user.getShippingAddresses());
 //        userDTO.setPhoneNumber(user.getPhoneNumber());

@@ -1,12 +1,10 @@
 package com.upgrad.eshopApp.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.upgrad.eshopApp.entites.Product;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class OrderDTO {

@@ -18,8 +18,7 @@ public class UserValidatorImpl implements UserValidator {
             throw new APIException("Invalid lastname");
         if(userDTO.getPassword() == null || userDTO.getPassword().length() <= 0   )
             throw new APIException("Invalid password");
-        if(userDTO.getUserId() <= 0 )
-            throw new APIException("Invalid user type");
+
 
     }
 

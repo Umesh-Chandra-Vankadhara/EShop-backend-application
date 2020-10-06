@@ -2,7 +2,6 @@ package com.upgrad.eshopApp.entites;
 
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,10 +9,10 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="ESHOP_SHIPPING_ADDRESS")
-public class ShippingAddress{
+public class EshopShippingAddress {
     @Id
-    @SequenceGenerator(name="ESHOP_SHIPPING_ADDRESS_ID_GENERATOR" )
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ESHOP_SHIPPING_ADDRESS_ID_GENERATOR")
+//    @SequenceGenerator(name="ESHOP_SHIPPING_ADDRESS_ID_GENERATOR" )
+//    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ESHOP_SHIPPING_ADDRESS_ID_GENERATOR")
 //    @GeneratedValue(generator = "sequence-generator")
 //    @GenericGenerator(
 //            name = "Hiberante_Sequence",
@@ -24,6 +23,7 @@ public class ShippingAddress{
 //                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
 //            }
 //    )
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
     @Column(name="CITY",nullable = false)
@@ -49,14 +49,14 @@ public class ShippingAddress{
 
     //bi-directional many-to-one association to EshopOrder
     @OneToMany(mappedBy="eshopShippingAddress")
-    private List<Order> eshopOrders;
+    private List<EshopOrder> eshopEshopOrders;
 
     //bi-directional many-to-one association to EshopUser
     @ManyToOne
     @JoinColumn(name="USER_ID")
-    private User eshopUser;
+    private EshopUser eshopUser;
 
-    public ShippingAddress() {
+    public EshopShippingAddress() {
     }
 
 

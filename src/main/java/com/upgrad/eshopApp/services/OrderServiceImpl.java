@@ -1,8 +1,7 @@
 package com.upgrad.eshopApp.services;
 
 import com.upgrad.eshopApp.daos.OrderDAO;
-import com.upgrad.eshopApp.entites.Order;
-import com.upgrad.eshopApp.entites.Product;
+import com.upgrad.eshopApp.entites.EshopOrder;
 import com.upgrad.eshopApp.exceptions.APIException;
 import com.upgrad.eshopApp.exceptions.OrderDetailsNotFoundException;
 import com.upgrad.eshopApp.exceptions.OrderFailedException;
@@ -26,25 +25,25 @@ public class OrderServiceImpl implements OrderService{
     OrderValidator orderValidator;
     @Override
 
-    public Order acceptOrderDetails(Order order) throws UserDetailsNotFoundException, OrderFailedException, APIException, ParseException {
-        return orderDAO.save(order);
+    public EshopOrder acceptOrderDetails(EshopOrder eshopOrder) throws UserDetailsNotFoundException, OrderFailedException, APIException, ParseException {
+        return orderDAO.save(eshopOrder);
     }
 
     @Override
-    public Order getOrderDetails(int orderId) throws OrderDetailsNotFoundException {
+    public EshopOrder getOrderDetails(int orderId) throws OrderDetailsNotFoundException {
         return orderDAO.findById(orderId).orElseThrow(
                 ()->  new OrderDetailsNotFoundException("Details not found for id : " + orderId));
     }
 
     @Override
     public boolean deleteBooking(int id) throws OrderDetailsNotFoundException {
-        Order order = getOrderDetails(id);
-        orderDAO.delete(order);
+        EshopOrder eshopOrder = getOrderDetails(id);
+        orderDAO.delete(eshopOrder);
         return true;
     }
 
     @Override
-    public List<Order> getAllOrderDetails() {
+    public List<EshopOrder> getAllOrderDetails() {
         return orderDAO.findAll();
     }
 }

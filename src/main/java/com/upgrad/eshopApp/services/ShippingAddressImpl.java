@@ -1,7 +1,7 @@
 package com.upgrad.eshopApp.services;
 
 import com.upgrad.eshopApp.daos.ShippingAddressDAO;
-import com.upgrad.eshopApp.entites.ShippingAddress;
+import com.upgrad.eshopApp.entites.EshopShippingAddress;
 import com.upgrad.eshopApp.exceptions.ShippingAddressDetailsNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +16,8 @@ public class ShippingAddressImpl implements ShippingAddressService{
     private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Override
-    public ShippingAddress acceptShippingAddress(ShippingAddress shippingAddress) throws ShippingAddressDetailsNotFoundException {
-        logger.debug("Enter accept shippingAddress details: SAVE" ,shippingAddress);
-        return shippingAddressDAO.save(shippingAddress);
+    public EshopShippingAddress acceptShippingAddress(EshopShippingAddress eshopShippingAddress) throws ShippingAddressDetailsNotFoundException {
+        logger.debug("Enter accept shippingAddress details: SAVE" , eshopShippingAddress);
+        return shippingAddressDAO.save(eshopShippingAddress);
     }
 }

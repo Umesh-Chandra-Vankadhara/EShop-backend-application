@@ -1,15 +1,13 @@
 package com.upgrad.eshopApp.controllers;
 
 import com.upgrad.eshopApp.dto.UserDTO;
-import com.upgrad.eshopApp.entites.User;
+import com.upgrad.eshopApp.entites.EshopUser;
 import com.upgrad.eshopApp.security.jwt.JwtTokenProvider;
 import com.upgrad.eshopApp.services.UserServiceImpl;
 import com.upgrad.eshopApp.utils.DTOEntityConverter;
 import com.upgrad.eshopApp.utils.EntityDTOConverter;
 import com.upgrad.eshopApp.validators.UserValidator;
-import com.upgrad.eshopApp.dto.ForgotPasswordDTO;
 import com.upgrad.eshopApp.dto.LoginDTO;
-import com.upgrad.eshopApp.dto.ResetPasswordDTO;
 import com.upgrad.eshopApp.exceptions.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +46,8 @@ public class AuthController {
     System.out.println("entered sign up");
     userValidator.validateUser(userDTO);
     try {
-      User user = userService.getUserDetailsByUsername(userDTO.getUsername());
-        if (user != null) {
+      EshopUser eshopUser = userService.getUserDetailsByUsername(userDTO.getUsername());
+        if (eshopUser != null) {
             throw new UserNameExistsException(
                 "User username already exists : " + userDTO.getUsername());
         }
@@ -65,9 +63,9 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(model);
       }
       String token = jwtTokenProvider.createToken(username);
-      User newUser = dtoEntityConverter.convertToUserEntity(userDTO);
-      User savedUser = userService.acceptUserDetails(newUser);
-      UserDTO savedUserDTO = entityDTOConverter.convertToUserDTO(savedUser);
+      EshopUser newEshopUser = dtoEntityConverter.convertToUserEntity(userDTO);
+      EshopUser savedEshopUser = userService.acceptUserDetails(newEshopUser);
+      UserDTO savedUserDTO = entityDTOConverter.convertToUserDTO(savedEshopUser);
       savedUserDTO.setJwtToken(token);
       return ResponseEntity.status(HttpStatus.CREATED).body(savedUserDTO);
     } catch (Exception e) {
@@ -89,12 +87,12 @@ public class AuthController {
       model.put("Error", "Username is invalid/ Password is empty");
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(model);
     }
-    User savedUser = userService.getUserDetailsByUsername(username);
-    if (!savedUser.getPassword().equals(password)) {
+    EshopUser savedEshopUser = userService.getUserDetailsByUsername(username);
+    if (!savedEshopUser.getPassword().equals(password)) {
       throw new BadCredentialsException("Invalid username/password");
     }
     String token = jwtTokenProvider.createToken(username);
-    UserDTO savedUserDTO = entityDTOConverter.convertToUserDTO(savedUser);
+    UserDTO savedUserDTO = entityDTOConverter.convertToUserDTO(savedEshopUser);
     savedUserDTO.setJwtToken(token);
     return ResponseEntity.status(HttpStatus.CREATED).body(savedUserDTO);
   }
